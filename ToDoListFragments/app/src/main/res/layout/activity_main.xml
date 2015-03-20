@@ -1,0 +1,22 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="tk.mirenamorrortu.todolistfragments.Fragments.InputFragment"
+        android:id="@+id/inputFragment"
+        tools:layout="@layout/fragment_input" />
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="tk.mirenamorrortu.todolistfragments.Fragments.ToDoListFragment"
+        android:id="@+id/listFragment"
+        android:layout_weight="1"
+        tools:layout="@android:layout/simple_list_item_1" />
+</LinearLayout>
