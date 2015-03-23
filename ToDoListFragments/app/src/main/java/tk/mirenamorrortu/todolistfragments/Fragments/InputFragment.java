@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import tk.mirenamorrortu.todolistfragments.Model.ToDo;
 import tk.mirenamorrortu.todolistfragments.R;
 
 /**
@@ -18,7 +19,7 @@ import tk.mirenamorrortu.todolistfragments.R;
 public class InputFragment extends Fragment {
 
     public interface TODOItemListener{
-        public void addTodo(String todo);
+        public void addTodo(ToDo todo);
     }
 
     private Button btnAdd;
@@ -46,13 +47,19 @@ public class InputFragment extends Fragment {
         btnAdd = (Button) layout.findViewById(R.id.btnAdd);
         todoText = (EditText) layout.findViewById(R.id.inputText);
 
+        addEventListeners();
+
+        return layout;
+    }
+
+    private void addEventListeners(){
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String todo = todoText.getText().toString();
+                ToDo todo = new ToDo(todoText.getText().toString());
+                todoText.setText("");
                 target.addTodo(todo);
             }
         });
-        return layout;
     }
 }
