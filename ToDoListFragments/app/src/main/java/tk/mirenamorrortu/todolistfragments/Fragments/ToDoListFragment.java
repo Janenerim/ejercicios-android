@@ -1,15 +1,18 @@
 package tk.mirenamorrortu.todolistfragments.Fragments;
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import tk.mirenamorrortu.todolistfragments.Adapters.ToDoAdapter;
+import tk.mirenamorrortu.todolistfragments.DetailActivity;
 import tk.mirenamorrortu.todolistfragments.Model.ToDo;
 import tk.mirenamorrortu.todolistfragments.R;
 
@@ -20,6 +23,7 @@ public class ToDoListFragment extends ListFragment implements InputFragment.TODO
 
     private final String TODOS_KEY = "TODOS";
     private ArrayList<ToDo> todos;
+    public static final String TODO_ITEM = "TODO_ITEM";
 
     private ToDoAdapter aa;
 
@@ -38,6 +42,23 @@ public class ToDoListFragment extends ListFragment implements InputFragment.TODO
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        ToDo todo = todos.get(position);
+
+        /*
+        //Si quisieramos eliminar el item al pulsar sobre el...
+        todos.remove(position);
+        aa.notifyDataSetChanged();*/
+
+        Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+        detailIntent.putExtra(TODO_ITEM, todo);
+
+        startActivity(detailIntent);
+
+    }
 
 /*    @Override
     public void onViewStateRestored(Bundle savedInstanceState) {

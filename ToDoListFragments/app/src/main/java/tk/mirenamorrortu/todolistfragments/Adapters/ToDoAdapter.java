@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,7 +47,7 @@ public class ToDoAdapter extends ArrayAdapter <ToDo> {
 
         ToDo item = getItem(position);
 
-        TextView lblTask = (TextView) layout.findViewById(R.id.lblTask);
+        TextView lblTask = (TextView) layout.findViewById(R.id.lbl_Task);
         TextView lblDate = (TextView) layout.findViewById(R.id.lblDate);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
