@@ -7,4 +7,5 @@
 
     <string name="no_camera">No hay camara en el dispositivo</string>
     <string name="no_text">No se ha escrito nada</string>
+    <string name="title_activity_camera">CameraActivity</string>
 </resources>
