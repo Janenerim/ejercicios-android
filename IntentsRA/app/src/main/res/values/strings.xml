@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">IntentsRA</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_target">TargetActivity</string>
+
+    <string name="no_camera">No hay camara en el dispositivo</string>
+    <string name="no_text">No se ha escrito nada</string>
+</resources>

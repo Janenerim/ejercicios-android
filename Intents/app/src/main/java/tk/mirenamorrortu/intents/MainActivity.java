@@ -5,8 +5,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import tk.mirenamorrortu.intents.Fragments.send_fragment;
 
-public class MainActivity extends ActionBarActivity {
+
+public class MainActivity extends ActionBarActivity implements send_fragment.SendDataListener{
+
+    public static final String IMG_KEY = "IMAGEN";
+    public static final String SEND_KEY = "SEND";
+    public static final String RECEIVED_KEY = "RECEIVED";
+
+    public static final int	ASK_CAMERA	=	1;
+    public static final int	SHOW_PHOTO	=	2;
+    public static final int ERR_PHOTO = 3;
+
+    public static final int ASK_SEND = 1;
+    public static final int CLOSE_SEND = 2;
+    public static final int ERR_SEND = 3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +50,10 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setData(String data) {
+
     }
 }
