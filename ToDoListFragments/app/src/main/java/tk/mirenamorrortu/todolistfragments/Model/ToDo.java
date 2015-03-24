@@ -13,9 +13,6 @@ public class ToDo implements Parcelable {
     private String task;
     private Date created;
 
-    private ToDo todo;
-    private int mData;
-
     public ToDo(String task) {
         this.task = task;
         this.created = new Date();
@@ -36,7 +33,7 @@ public class ToDo implements Parcelable {
 
     public String getCreatedFormated() {
         SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
-        return smp.format(created.toString());
+        return smp.format(this.created);
     }
 
     @Override

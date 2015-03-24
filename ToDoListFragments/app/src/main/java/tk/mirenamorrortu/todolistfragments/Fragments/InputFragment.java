@@ -34,7 +34,7 @@ public class InputFragment extends Fragment {
         try{
             this.target = (TODOItemListener) activity;
         }catch (ClassCastException ex){
-            throw new ClassCastException(activity.toString() + "must implement TODOItemListener interface");
+            throw new ClassCastException(activity.toString() + " must implement TODOItemListener interface");
         }
     }
 
@@ -57,8 +57,8 @@ public class InputFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ToDo todo = new ToDo(todoText.getText().toString());
-                todoText.setText("");
                 target.addTodo(todo);
+                todoText.setText("");
             }
         });
     }
