@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">EarthQuakes</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="eartquakes_url">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson</string>
+</resources>
