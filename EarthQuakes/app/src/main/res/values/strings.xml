@@ -4,4 +4,26 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="eartquakes_url">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson</string>
+    <string name="title_activity_detail_earth_quake">DetailEarthQuake</string>
+    <string name="num_earthquakes">%d earthquakes processed</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="earthquakes_refresh">Earthquakes Refresh</string>
+    <string name="earthquakes_filter">Earthquakes Filter</string>
+    <string name="autorefresh">AutoRefresh</string>
+    <string name="autorefresh_detail">Activa o desactiva el refresco de terremotos</string>
+    <string name="frequency_detail">Establece la frecuencia de refresco</string>
+    <string name="frequency_time">Frequency lapse</string>
+    <string name="autorefresh_id">AUTO_REFRESH</string>
+    <string name="frequency">FREQUENCY_ID</string>
+    <string name="frequency_1_min">Every minute</string>
+    <string name="frequency_5_min">Every 5 minutes</string>
+    <string name="frequency_10_min">Every 10 minutes</string>
+    <string name="frequency_15_min">Every 15 minutes</string>
+    <string name="frequency_30_min">Every 30 minutes</string>
+    <string name="frequency_1_hour">Every hour</string>
+    <string name="frequency_12_hour">Every half day</string>
+    <string name="frequency_1_day">Once per day</string>
+    <string name="min_mag">MIN_MAGNITUDE</string>
+    <string name="min_magnitude">Min. Magnitude</string>
+    <string name="min_magnitude_detail">Magnitud mínima a mostrar</string>
 </resources>

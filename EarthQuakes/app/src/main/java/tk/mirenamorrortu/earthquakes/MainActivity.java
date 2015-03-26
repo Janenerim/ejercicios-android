@@ -1,12 +1,17 @@
 package tk.mirenamorrortu.earthquakes;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import tk.mirenamorrortu.earthquakes.Activities.SettingsActivity;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    private final int PREFS_ACTIVITY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +36,18 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent preferences = new Intent(this, SettingsActivity.class);
+
+            startActivityForResult(preferences, PREFS_ACTIVITY);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

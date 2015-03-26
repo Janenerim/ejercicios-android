@@ -1,14 +1,15 @@
 package tk.mirenamorrortu.earthquakes.Adaters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -16,15 +17,16 @@ import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 import tk.mirenamorrortu.earthquakes.R;
 
 /**
- * Created by cursomovil on 25/03/15.
+ * Created by Bafi on 25/03/15.
  */
 public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
+
     private int resource;
+    private TextView magnitud;
 
     public EarthQuakeAdapter(Context context, int resource, List<EarthQuake> objects) {
         super(context, resource, objects);
         this.resource = resource;
-
     }
 
     @Override
@@ -47,18 +49,55 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
 
         EarthQuake item = getItem(position);
 
-        TextView magnitud = (TextView) layout.findViewById(R.id.mag_txt);
+        magnitud = (TextView) layout.findViewById(R.id.mag_txt);
         TextView fecha = (TextView) layout.findViewById(R.id.date_txt);
         TextView lugar = (TextView) layout.findViewById(R.id.place_txt);
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-        magnitud.setText(Double.toString(item.getMagnitude()));
+        Double mag = item.getMagnitude();
+        setMagColor(mag);
+        DecimalFormat precision = new DecimalFormat("0.00");
+        magnitud.setText(precision.format(mag));
+
+
         lugar.setText(item.getPlace());
         fecha.setText(sdf.format(item.getTime()));
 
         //return super.getView(position, convertView, parent);
         return layout;
     }
+
+
+    private static final int ROJO = Color.rgb(255,0,0);
+    private static final int NARANJA = Color.rgb (255,255,0);
+    private static final int AMARILLO = Color.rgb (0,127,0);
+    private static final int VERDE = Color.rgb(0,255,0);
+    private static final int NEGRO = Color.rgb(255,255,255);
+    private static final int BLANCO = Color.rgb(0,0,0);
+
+    private void setMagColor (Double mag){
+        int colorf;
+        int colort;
+        if (mag < 0){
+            colorf = VERDE;
+            colort = NEGRO;
+        }else if(mag >= 0 && mag < 2.5){
+            colorf = AMARILLO;
+            colort = NEGRO;
+        }else if (mag >= 2.5 && mag < 4.5){
+            colorf = NARANJA;
+            colort = NEGRO;
+        }else if(mag >= 4.5 && mag < 6.5){
+            colorf = ROJO;
+            colort = NEGRO;
+        }else {
+            colorf = NEGRO;
+            colort = BLANCO;
+        }
+        magnitud.setBackgroundColor(colorf);
+        magnitud.setTextColor(colort);
+    }
+
 }

@@ -23,7 +23,9 @@ public class DownloadEarQuakesTask extends AsyncTask <String, EarthQuake, Intege
 
     public interface AddEarthQuakeInterface{
         public void AddEarthQuake(EarthQuake earthQuake);
+        public void notifyTotal(int total);
     }
+
 
     private final String EARTQUAKE = "EARTHQUAKE";
     private AddEarthQuakeInterface target;
@@ -33,14 +35,16 @@ public class DownloadEarQuakesTask extends AsyncTask <String, EarthQuake, Intege
 
     @Override
     protected Integer doInBackground(String... urls) {
+        Integer count = null;
         if (urls.length > 0){
-            updateEarthQuakes(urls[0]);
+            count = updateEarthQuakes(urls[0]);
         }
-        return null;
+        return count;
     }
 
-    private void updateEarthQuakes(String earthquakesFeed) {
+    private Integer updateEarthQuakes(String earthquakesFeed) {
         JSONObject json;
+        Integer count = 0;
 
         try {
             URL url = new URL(earthquakesFeed);
@@ -64,6 +68,8 @@ public class DownloadEarQuakesTask extends AsyncTask <String, EarthQuake, Intege
                 json = new JSONObject(responseStrBuilder.toString());
                 JSONArray earthquakes = json.getJSONArray("features");
 
+                count = earthquakes.length();
+
                 for (int i = earthquakes.length() - 1; i >= 0; i--) {
                     processEarthQuakeTask(earthquakes.getJSONObject(i));
                 }
@@ -75,6 +81,7 @@ public class DownloadEarQuakesTask extends AsyncTask <String, EarthQuake, Intege
         } catch (JSONException e) {
             Log.d("TAG", "JSON Exception", e);
         }
+        return count;
     }
 
     private void processEarthQuakeTask(JSONObject jsonObject) {
@@ -110,5 +117,11 @@ public class DownloadEarQuakesTask extends AsyncTask <String, EarthQuake, Intege
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
         target.AddEarthQuake(earthQuakes[0]);
+    }
+
+    @Override
+    protected void onPostExecute(Integer count) {
+        super.onPostExecute(count);
+        target.notifyTotal(count);
     }
 }

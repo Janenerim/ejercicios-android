@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="tk.mirenamorrortu.earthquakes.DetailEarthQuake">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4.5"
+        android:id="@+id/mag_txt"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_alignBottom="@+id/date_txt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Place"
+        android:id="@+id/place_txt"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/mag_txt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:id="@+id/date_txt"
+        android:layout_below="@+id/place_txt"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/mag_txt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="identifier"
+        android:id="@+id/id_txt"
+        android:layout_below="@+id/mag_txt"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="url"
+        android:id="@+id/url_txt"
+        android:layout_below="@+id/id_txt"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/id_txt"
+        android:layout_marginLeft="10dp" />
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:name="android.webkit.WebViewFragment"
+        android:id="@+id/maps_frag"
+        android:layout_below="@+id/url_txt"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

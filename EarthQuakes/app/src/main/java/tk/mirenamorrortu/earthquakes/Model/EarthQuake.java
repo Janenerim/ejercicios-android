@@ -1,11 +1,15 @@
 package tk.mirenamorrortu.earthquakes.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by cursomovil on 25/03/15.
+ * Created by Bafi on 25/03/15.
  */
-public class EarthQuake {
+public class EarthQuake implements Parcelable {
 
     private Date time;
 
@@ -39,9 +43,13 @@ public class EarthQuake {
         this.url = url;
     }
 
-
     public Date getTime() {
         return time;
+    }
+
+    public String getTimeFormatted(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        return sdf.format(this.time);
     }
 
     public void setTime(Date time) {
@@ -88,4 +96,46 @@ public class EarthQuake {
     public String toString() {
         return this.getPlace();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flag) {
+
+        dest.writeDouble(magnitude);
+        dest.writeLong(time.getTime());
+        dest.writeString(_id);
+        dest.writeString(place);
+        dest.writeString(url);
+        dest.writeDouble(coords.getLat());
+        dest.writeDouble(coords.getLng());
+        dest.writeDouble(coords.getDepth());
+
+    }
+
+    private EarthQuake (Parcel in){
+        //hay que leerlos en el mismo orden en el que los hemos escrito!!!!!!!!!!!!
+        magnitude = in.readDouble();
+        time = new Date(in.readLong());
+        _id = in.readString();
+        place = in.readString();
+        url = in.readString();
+        coords = new Coordinate(in.readDouble(), in.readDouble(), in.readDouble());
+    }
+
+
+    public static final Parcelable.Creator<EarthQuake> CREATOR
+            = new Parcelable.Creator<EarthQuake>() {
+        public EarthQuake createFromParcel(Parcel in) {
+            return new EarthQuake(in);
+        }
+
+        public EarthQuake[] newArray(int size) {
+            return new EarthQuake[size];
+        }
+    };
+
 }
