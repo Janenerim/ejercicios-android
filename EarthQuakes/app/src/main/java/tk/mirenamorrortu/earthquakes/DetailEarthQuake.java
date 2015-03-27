@@ -33,6 +33,7 @@ public class DetailEarthQuake extends ActionBarActivity {
         Fecha = (TextView) findViewById(R.id.date_txt);
         Place = (TextView) findViewById(R.id.place_txt);
         _url = (TextView) findViewById(R.id.url_txt);
+        maps = (WebViewFragment) getFragmentManager().findFragmentById(R.id.maps_frag);
         //maps = (Fragment) findViewById(R.id.maps_frag);
     }
 
@@ -57,7 +58,15 @@ public class DetailEarthQuake extends ActionBarActivity {
         Fecha.setText(eq.getTimeFormatted());
         Place.setText(eq.getPlace());
         _url.setText(eq.getUrl());
+
         //maps.setCoords (eq.getCoords);
+/*        String url_gogle_maps_coords = getString(R.string.google_url);
+        url_gogle_maps_coords = url_gogle_maps_coords + eq.getCoords().getLat() + ", " + eq.getCoords().getLng();
+        maps.init(url_gogle_maps_coords);
+        getFragmentManager().beginTransaction().add(android.R.id.content, maps).commit();
+       */
+
+
     }
 
     private void setmagnitudebackground(double mag) {
@@ -90,4 +99,11 @@ public class DetailEarthQuake extends ActionBarActivity {
     private static final int VERDE = Color.rgb(0,255,0);
     private static final int NEGRO = Color.rgb(255,255,255);
     private static final int BLANCO = Color.rgb(0,0,0);
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 }

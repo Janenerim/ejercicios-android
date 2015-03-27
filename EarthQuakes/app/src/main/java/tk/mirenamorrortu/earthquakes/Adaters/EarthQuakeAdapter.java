@@ -1,7 +1,9 @@
 package tk.mirenamorrortu.earthquakes.Adaters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +26,18 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
     private int resource;
     private TextView magnitud;
 
+
     public EarthQuakeAdapter(Context context, int resource, List<EarthQuake> objects) {
         super(context, resource, objects);
+
         this.resource = resource;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         RelativeLayout layout;
+
 
         if(convertView == null){
             //si no existe la vista, la creamos
@@ -53,7 +59,6 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
         TextView fecha = (TextView) layout.findViewById(R.id.date_txt);
         TextView lugar = (TextView) layout.findViewById(R.id.place_txt);
 
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
         Double mag = item.getMagnitude();
@@ -61,12 +66,16 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
         DecimalFormat precision = new DecimalFormat("0.00");
         magnitud.setText(precision.format(mag));
 
-
         lugar.setText(item.getPlace());
         fecha.setText(sdf.format(item.getTime()));
 
-        //return super.getView(position, convertView, parent);
+
+
+
+
         return layout;
+
+
     }
 
 

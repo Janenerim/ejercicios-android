@@ -5,18 +5,26 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import tk.mirenamorrortu.earthquakes.Activities.SettingsActivity;
+import tk.mirenamorrortu.earthquakes.task.DownloadEarQuakesTask;
 
 
-public class MainActivity extends ActionBarActivity {
-
-    private final int PREFS_ACTIVITY = 0;
+public class MainActivity extends ActionBarActivity implements DownloadEarQuakesTask.AddEarthQuakeInterface{
+    public static final int PREFS_ACTIVITY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        downloadEarthQuakes();
+    }
+
+    private void downloadEarthQuakes() {
+        DownloadEarQuakesTask task = new DownloadEarQuakesTask(this.getBaseContext(), this);
+        task.execute(getString(R.string.eartquakes_url));
     }
 
 
@@ -48,6 +56,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
 
+    @Override
+    public void notifyTotal(int total) {
+        String msg = getString(R.string.num_earthquakes, total);
+        Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        t.show();
     }
 }

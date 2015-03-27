@@ -1,5 +1,6 @@
 package tk.mirenamorrortu.earthquakes.task;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import org.json.JSONArray;
@@ -12,6 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import tk.mirenamorrortu.earthquakes.DataBase.EarthQuakesDB;
 import tk.mirenamorrortu.earthquakes.Model.Coordinate;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 
@@ -21,16 +24,18 @@ import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
  */
 public class DownloadEarQuakesTask extends AsyncTask <String, EarthQuake, Integer>{
 
+    private EarthQuakesDB earthQuakeDB;
+
     public interface AddEarthQuakeInterface{
-        public void AddEarthQuake(EarthQuake earthQuake);
         public void notifyTotal(int total);
     }
 
-
     private final String EARTQUAKE = "EARTHQUAKE";
     private AddEarthQuakeInterface target;
-    public DownloadEarQuakesTask(AddEarthQuakeInterface target){
+    public DownloadEarQuakesTask(Context context, AddEarthQuakeInterface target){
         this.target = target;
+
+        earthQuakeDB = new EarthQuakesDB(context);
     }
 
     @Override
@@ -116,7 +121,6 @@ public class DownloadEarQuakesTask extends AsyncTask <String, EarthQuake, Intege
     @Override
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
-        target.AddEarthQuake(earthQuakes[0]);
     }
 
     @Override

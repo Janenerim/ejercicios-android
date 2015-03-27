@@ -1,8 +1,11 @@
 package tk.mirenamorrortu.earthquakes.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +31,15 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEarQ
 
     private ArrayList<EarthQuake> earthQuakes;
     private ArrayAdapter aa;
+   /* private Context context;
+    private SharedPreferences prefs;*/
 
     public static final String EARTHQUAKE = "EARTHQUAKE";
 
-    public void AddEarthQuake(EarthQuake earthQuake){
-        earthQuakes.add(0,earthQuake);
-        aa.notifyDataSetChanged();
-    }
+   /* private Double getMinMagPref(){
+        return Double.parseDouble(prefs.getString(context.getString(R.string.min_mag),"0"));
+    }*/
+
 
     @Override
     public void notifyTotal(int total) {
@@ -42,30 +47,30 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEarQ
         Toast t = Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT);
         t.show();
     }
-
-
     /*como va a tardar en obtener los datos desde inet, lo hacemos cuanto antes, y como no nos haceç
-    falta la vista, porque luego tenemos el notify, lo hacemos en el on
-     */
+        falta la vista, porque luego tenemos el notify
+    */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         earthQuakes = new ArrayList<EarthQuake>();
-
-        DownloadEarQuakesTask task = new DownloadEarQuakesTask(this);
-        task.execute(getString(R.string.eartquakes_url));
+        /*prefs = PreferenceManager.getDefaultSharedPreferences(context);*/
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
-
+        /*this.context = this.getActivity().getBaseContext();*/
+        getEarthQuakesData();
         aa = new EarthQuakeAdapter(getActivity(), R.layout.earthquake_item, earthQuakes);
         setListAdapter(aa);
-
         return layout;
+    }
+
+    private void getEarthQuakesData() {
+
     }
 
     @Override
@@ -74,16 +79,12 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEarQ
 
         EarthQuake eq = earthQuakes.get(position);
 
-        /*
-        //Si quisieramos eliminar el item al pulsar sobre el...
-        todos.remove(position);
-        aa.notifyDataSetChanged();*/
-
         Intent detailIntent = new Intent(getActivity(), DetailEarthQuake.class);
         detailIntent.putExtra(EARTHQUAKE, eq);
 
-
         startActivity(detailIntent);
     }
+
+
 
 }
