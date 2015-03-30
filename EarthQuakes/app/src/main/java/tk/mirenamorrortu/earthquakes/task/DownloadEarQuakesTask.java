@@ -30,7 +30,7 @@ public class DownloadEarQuakesTask extends AsyncTask <String, EarthQuake, Intege
         public void notifyTotal(int total);
     }
 
-    private final String EARTQUAKE = "EARTHQUAKE";
+    private final String EARTHQUAKE = "EARTHQUAKE";
     private AddEarthQuakeInterface target;
     public DownloadEarQuakesTask(Context context, AddEarthQuakeInterface target){
         this.target = target;
@@ -107,10 +107,11 @@ public class DownloadEarQuakesTask extends AsyncTask <String, EarthQuake, Intege
             eQ.setTime(properties.getLong("time"));
             eQ.setUrl(properties.getString("url"));
 
-            Log.d(EARTQUAKE, eQ.toString());
+            Log.d(EARTHQUAKE, eQ.toString());
+
+            earthQuakeDB.addEarthQuakeToDB(eQ);
 
             publishProgress(eQ);
-
 
         } catch (JSONException e) {
             e.printStackTrace();

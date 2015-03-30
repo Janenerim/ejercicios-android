@@ -7,18 +7,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import tk.mirenamorrortu.earthquakes.Activities.SettingsActivity;
+import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 import tk.mirenamorrortu.earthquakes.task.DownloadEarQuakesTask;
 
 
 public class MainActivity extends ActionBarActivity implements DownloadEarQuakesTask.AddEarthQuakeInterface{
     public static final int PREFS_ACTIVITY = 0;
 
+    public interface ActualizarListaInterface{
+        public void ActualizarLista();
+    }
+
+    private ActualizarListaInterface target;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        target = (ActualizarListaInterface) this.getFragmentManager().findFragmentById(R.id.fragment);
         downloadEarthQuakes();
     }
 
@@ -63,5 +72,9 @@ public class MainActivity extends ActionBarActivity implements DownloadEarQuakes
         String msg = getString(R.string.num_earthquakes, total);
         Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         t.show();
+        target.ActualizarLista();
+
     }
+
+
 }

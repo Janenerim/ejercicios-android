@@ -38,11 +38,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         String PREF_AUTO_UPDATE = getString(R.string.autorefresh_id);
         String PREF_UPDATE_INTERVAL = getString(R.string.frequency);
-        String PREF_MIN_MAG = getString(R.string.min_mag);
+        String PREF_MIN_MAG = getString(R.string.min_magnitude);
         if(key.equals(PREF_AUTO_UPDATE)){
             // Star/Stop
         } else if(key.equals(PREF_UPDATE_INTERVAL)){
             // Change auto refresh interval
+        } else if (key.equals(PREF_MIN_MAG)){
+            // Resfresh list by mag
         }
 
     }

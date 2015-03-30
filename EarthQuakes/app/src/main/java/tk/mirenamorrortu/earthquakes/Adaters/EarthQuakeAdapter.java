@@ -92,13 +92,13 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
         if (mag < 0){
             colorf = VERDE;
             colort = NEGRO;
-        }else if(mag >= 0 && mag < 2.5){
+        }else if(mag >= 0 && mag < 3.5){
             colorf = AMARILLO;
             colort = NEGRO;
-        }else if (mag >= 2.5 && mag < 4.5){
+        }else if (mag >= 3.5 && mag < 5.5){
             colorf = NARANJA;
             colort = NEGRO;
-        }else if(mag >= 4.5 && mag < 6.5){
+        }else if(mag >= 5.5 && mag < 8.5){
             colorf = ROJO;
             colort = NEGRO;
         }else {
