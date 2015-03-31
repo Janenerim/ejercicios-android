@@ -1,17 +1,16 @@
 package tk.mirenamorrortu.earthquakes;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.webkit.WebViewFragment;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+import tk.mirenamorrortu.earthquakes.DataBase.EarthQuakesDB;
 import tk.mirenamorrortu.earthquakes.Fragments.EarthQuakeListFragment;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 
@@ -45,7 +44,11 @@ public class DetailEarthQuake extends ActionBarActivity {
         SetViews();
 
         Intent detailIntent = getIntent();
-        eq = detailIntent.getParcelableExtra(EarthQuakeListFragment.EARTHQUAKE);
+
+        //Si nos pasaran el id del terremoto, podríamos pedirselo a la BD
+        EarthQuakesDB db = new EarthQuakesDB(this);
+        eq = db.GetEarthQuake(detailIntent.getStringExtra(EarthQuakeListFragment.ID_EARTHQUAKE));
+       // eq = detailIntent.getParcelableExtra(EarthQuakeListFragment.EARTHQUAKE);
 
         populateView();
     }
@@ -69,36 +72,46 @@ public class DetailEarthQuake extends ActionBarActivity {
 
     }
 
-    private void setmagnitudebackground(double mag) {
+    private static final int ROJO = Color.rgb(255,0,0);
+    private static final int NARANJA = Color.rgb (255,128,0);
+    private static final int AMARILLO = Color.rgb (255,255,0);
+    private static final int VERDE = Color.rgb(0,255,0);
+    private static final int AZUL = Color.rgb(0,0,255);
+    private static final int GRIS = Color.rgb(160,160,160);
+    private static final int NEGRO = Color.rgb(0,0,0);
+    private static final int BLANCO = Color.rgb(255,255,255);
+
+    private void setmagnitudebackground (Double mag){
         int colorf;
         int colort;
         if (mag < 0){
+            colorf = BLANCO;
+            colort = NEGRO;
+        }else if (mag >= 0 &&  mag < 1.5){
+            colorf = GRIS;
+            colort = BLANCO;
+        }else if (mag >= 1.5 && mag < 2.5){
+            colorf = AZUL;
+            colort = BLANCO;
+        }else if(mag >= 2.5 && mag < 3.5){
             colorf = VERDE;
-            colort = NEGRO;
-        }else if(mag >= 0 && mag < 2.5){
+            colort = BLANCO;
+        }else if (mag >= 3.5 && mag < 4.5){
             colorf = AMARILLO;
-            colort = NEGRO;
-        }else if (mag >= 2.5 && mag < 4.5){
+            colort = BLANCO;
+        }else if(mag >= 4.5 && mag < 5.5){
             colorf = NARANJA;
-            colort = NEGRO;
-        }else if(mag >= 4.5 && mag < 6.5){
+            colort = BLANCO;
+        }else if(mag >= 5.5 && mag < 6.5){
             colorf = ROJO;
-            colort = NEGRO;
+            colort = BLANCO;
         }else {
             colorf = NEGRO;
-            colort = BLANCO;
+            colort = ROJO;
         }
         magnitud.setBackgroundColor(colorf);
         magnitud.setTextColor(colort);
-
     }
-
-    private static final int ROJO = Color.rgb(255, 0, 0);
-    private static final int NARANJA = Color.rgb (255,255,0);
-    private static final int AMARILLO = Color.rgb (0,127,0);
-    private static final int VERDE = Color.rgb(0,255,0);
-    private static final int NEGRO = Color.rgb(255,255,255);
-    private static final int BLANCO = Color.rgb(0,0,0);
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import tk.mirenamorrortu.earthquakes.Activities.SettingsActivity;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
+import tk.mirenamorrortu.earthquakes.Services.DownloadEarthquakeService;
 import tk.mirenamorrortu.earthquakes.task.DownloadEarQuakesTask;
 
 
@@ -32,8 +33,12 @@ public class MainActivity extends ActionBarActivity implements DownloadEarQuakes
     }
 
     private void downloadEarthQuakes() {
+        /*Con AsynTask
         DownloadEarQuakesTask task = new DownloadEarQuakesTask(this.getBaseContext(), this);
-        task.execute(getString(R.string.eartquakes_url));
+        task.execute(getString(R.string.eartquakes_url));*/
+
+        Intent Download = new Intent (this, DownloadEarthquakeService.class);
+        startService(Download);
     }
 
 

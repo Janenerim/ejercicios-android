@@ -21,12 +21,25 @@
         <activity
             android:name=".DetailEarthQuake"
             android:label="@string/title_activity_detail_earth_quake"
-            >
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tk.mirenamorrortu.earthquakes.MainActivity" />
         </activity>
-        <activity android:name=".Activities.SettingsActivity"
-            android:label="@string/title_activity_settings">
+        <activity
+            android:name=".Activities.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
 
-        </activity>
+        <service
+            android:name=".Services.DownloadEarthquakeService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name=".Services.pru"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

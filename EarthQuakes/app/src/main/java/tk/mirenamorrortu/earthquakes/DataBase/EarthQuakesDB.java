@@ -44,6 +44,10 @@ public class EarthQuakesDB {
         return res;
     }
 
+    private boolean isEarthQuakeOnDataBase (String id){
+        return (getEarthQuakesbyId(id) != null);
+    }
+
     private ArrayList<EarthQuake> ConvertirConsultaTipoEarthQuake (Cursor cursor){
         ArrayList<EarthQuake> earthQuakes = new ArrayList<EarthQuake>();
         if (cursor != null && cursor.getCount() > 0){
@@ -57,6 +61,22 @@ public class EarthQuakesDB {
             cursor.close();
         }
         return earthQuakes;
+    }
+
+    public EarthQuake GetEarthQuake (String idEarthQuake){
+        Cursor consulta = getEarthQuakesbyId(idEarthQuake);
+        if (consulta!= null){
+            HashMap<String, Integer> colum_index = getColumnsIndex(result_columns, consulta);
+            consulta.moveToFirst();
+            return CursorToEarthQuake(consulta, colum_index);
+        }
+        return null;
+    }
+
+    private Cursor getEarthQuakesbyId(String idEarthQuake) {
+        String where = EarthQuakeOpenHelper.ID_COLUMN_NAME + " = ?";
+        String[] whereArgs = {idEarthQuake};
+        return db.query(EarthQuakeOpenHelper.DATABASE_TABLE, result_columns, where, whereArgs, null, null, null);
     }
 
     public List<EarthQuake> GetAllEarthQuakes(){
@@ -74,11 +94,21 @@ public class EarthQuakesDB {
     private Cursor getEarthQuakesMinMag(Double minMag, int orderBy, int group){
         // Clausula Where!!!
         String where = null;
+        String[] whereArgs;
         if (minMag != null) {
-            where = EarthQuakeOpenHelper.MAG_COLUMN_NAME + " > " + minMag.toString();
+            where = EarthQuakeOpenHelper.MAG_COLUMN_NAME + " > ?";
+            String[] wArgs = {
+                   String.valueOf(minMag.toString()),
+            };
+            whereArgs = wArgs;
+        }
+        else{
+            String[] wArgs = null;
+            whereArgs = wArgs;
+
         }
         //Replace these with valid SQL statements as necessary.
-        String	whereArgs[]	=	null;
+
 
         String	groupBy;
         switch (group){
@@ -132,12 +162,15 @@ public class EarthQuakesDB {
     }
 
     private long AddEarthQuake (EarthQuake eq) {
-        ContentValues newEQBD = EarthQuakeToContentValues(eq);
         long row = -1;
-        try{
-            row = db.insertOrThrow(EarthQuakeOpenHelper.DATABASE_TABLE, null, newEQBD);
-        }catch (Exception ex){
-            Log.d("ERROR_INSERT_BD", "Error al insertar en la BD: " + ex.getMessage());
+        if (!isEarthQuakeOnDataBase(eq.getId())){
+            ContentValues newEQBD = EarthQuakeToContentValues(eq);
+            try{
+                row = db.insertOrThrow(EarthQuakeOpenHelper.DATABASE_TABLE, null, newEQBD);
+                Log.d("EARTHQUAKE_NEW", "row : " + String.valueOf(row));
+            }catch (Exception ex){
+                Log.d("ERROR_INSERT_BD", "Error al insertar en la BD: " + ex.getMessage());
+            }
         }
         return row;
     }

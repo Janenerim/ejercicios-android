@@ -1,9 +1,7 @@
 package tk.mirenamorrortu.earthquakes.Adaters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import tk.mirenamorrortu.earthquakes.Model.Coordinate;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 import tk.mirenamorrortu.earthquakes.R;
 
@@ -69,41 +68,49 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
         lugar.setText(item.getPlace());
         fecha.setText(sdf.format(item.getTime()));
 
-
-
-
+        Coordinate coords = item.getCoords();
+        //pintar las coordenadas en el mapa.
 
         return layout;
-
-
     }
 
 
     private static final int ROJO = Color.rgb(255,0,0);
-    private static final int NARANJA = Color.rgb (255,255,0);
-    private static final int AMARILLO = Color.rgb (0,127,0);
+    private static final int NARANJA = Color.rgb (255,128,0);
+    private static final int AMARILLO = Color.rgb (255,255,0);
     private static final int VERDE = Color.rgb(0,255,0);
-    private static final int NEGRO = Color.rgb(255,255,255);
-    private static final int BLANCO = Color.rgb(0,0,0);
+    private static final int AZUL = Color.rgb(0,0,255);
+    private static final int GRIS = Color.rgb(160,160,160);
+    private static final int NEGRO = Color.rgb(0,0,0);
+    private static final int BLANCO = Color.rgb(255,255,255);
 
     private void setMagColor (Double mag){
         int colorf;
         int colort;
         if (mag < 0){
+            colorf = BLANCO;
+            colort = NEGRO;
+        }else if (mag >= 0 &&  mag < 1.5){
+            colorf = GRIS;
+            colort = BLANCO;
+        }else if (mag >= 1.5 && mag < 2.5){
+            colorf = AZUL;
+            colort = BLANCO;
+        }else if(mag >= 2.5 && mag < 3.5){
             colorf = VERDE;
-            colort = NEGRO;
-        }else if(mag >= 0 && mag < 3.5){
+            colort = BLANCO;
+        }else if (mag >= 3.5 && mag < 4.5){
             colorf = AMARILLO;
-            colort = NEGRO;
-        }else if (mag >= 3.5 && mag < 5.5){
+            colort = BLANCO;
+        }else if(mag >= 4.5 && mag < 5.5){
             colorf = NARANJA;
-            colort = NEGRO;
-        }else if(mag >= 5.5 && mag < 8.5){
+            colort = BLANCO;
+        }else if(mag >= 5.5 && mag < 6.5){
             colorf = ROJO;
-            colort = NEGRO;
+            colort = BLANCO;
         }else {
             colorf = NEGRO;
-            colort = BLANCO;
+            colort = ROJO;
         }
         magnitud.setBackgroundColor(colorf);
         magnitud.setTextColor(colort);

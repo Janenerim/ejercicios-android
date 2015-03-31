@@ -104,7 +104,6 @@ public class EarthQuake implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flag) {
-
         dest.writeDouble(magnitude);
         dest.writeLong(time.getTime());
         dest.writeString(_id);
@@ -113,7 +112,6 @@ public class EarthQuake implements Parcelable {
         dest.writeDouble(coords.getLat());
         dest.writeDouble(coords.getLng());
         dest.writeDouble(coords.getDepth());
-
     }
 
     private EarthQuake (Parcel in){

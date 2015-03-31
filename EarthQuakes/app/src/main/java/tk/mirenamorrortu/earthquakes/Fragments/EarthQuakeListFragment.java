@@ -38,6 +38,7 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEarQ
     private EarthQuakesDB earthQuakeDB;
 
     public static final String EARTHQUAKE = "EARTHQUAKE";
+    public static final String ID_EARTHQUAKE ="ID";
 
     private Double getMinMagPref(){
         return Double.parseDouble(prefs.getString(context.getString(R.string.min_mag),"0"));
@@ -74,7 +75,6 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEarQ
 
     private void cargarEarthQuakesData() {
         earthQuakes.clear();
-        aa.notifyDataSetChanged();
         earthQuakes.addAll(earthQuakeDB.GetAllEarthQuakes());
         aa.notifyDataSetChanged();
     }
@@ -82,7 +82,6 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEarQ
     private void cargarEarthQuakesData_bypreferences() {
         Double minmag = getMinMagPref();
         earthQuakes.clear();
-        aa.notifyDataSetChanged();
         earthQuakes.addAll(earthQuakeDB.GetEarthQuakesFilerByMag(minmag));
         aa.notifyDataSetChanged();
     }
@@ -100,7 +99,10 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEarQ
         EarthQuake eq = earthQuakes.get(position);
 
         Intent detailIntent = new Intent(getActivity(), DetailEarthQuake.class);
-        detailIntent.putExtra(EARTHQUAKE, eq);
+
+        //podríamos pasar solo el id y que el detalle se descargue la info;
+        detailIntent.putExtra(ID_EARTHQUAKE, eq.getId());
+        //detailIntent.putExtra(EARTHQUAKE, eq);
 
         startActivity(detailIntent);
     }
