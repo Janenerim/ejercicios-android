@@ -17,7 +17,7 @@
             android:summary="@string/frequency_detail"
             android:entries="@array/update_freq_options"
             android:entryValues="@array/update_freq_values"
-            android:defaultValue="@string/frequency_5_min"/>
+            android:defaultValue="@integer/default_interval"/>
 
 
 

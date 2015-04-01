@@ -1,6 +1,9 @@
 package tk.mirenamorrortu.earthquakes;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import tk.mirenamorrortu.earthquakes.Activities.SettingsActivity;
+import tk.mirenamorrortu.earthquakes.Managers.EarthQuakeAlarmManager;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 import tk.mirenamorrortu.earthquakes.Services.DownloadEarthquakeService;
 import tk.mirenamorrortu.earthquakes.task.DownloadEarQuakesTask;
@@ -17,6 +21,7 @@ import tk.mirenamorrortu.earthquakes.task.DownloadEarQuakesTask;
 
 public class MainActivity extends ActionBarActivity implements DownloadEarQuakesTask.AddEarthQuakeInterface{
     public static final int PREFS_ACTIVITY = 0;
+    private String EARTHQUAKE_PREFS = "PREFERENCES";
 
     public interface ActualizarListaInterface{
         public void ActualizarLista();
@@ -29,7 +34,27 @@ public class MainActivity extends ActionBarActivity implements DownloadEarQuakes
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         target = (ActualizarListaInterface) this.getFragmentManager().findFragmentById(R.id.fragment);
-        downloadEarthQuakes();
+        //downloadEarthQuakes();
+        checkToSettedAlarm();
+        //Comprobamos si hay que lanzar la alarma:
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean autorefresh = Boolean.parseBoolean(prefs.getString(this.getString(R.string.autorefresh), "false"));
+        if (autorefresh){
+            long freq = Long.parseLong(prefs.getString(this.getString(R.string.frequency), "1"));
+            freq = freq * 60000;
+            EarthQuakeAlarmManager.setAlarm(this, freq);
+        }
+    }
+
+    private void checkToSettedAlarm() {
+        String KEY = "LAUNCHED_BEFORE";
+        SharedPreferences pref = getSharedPreferences(EARTHQUAKE_PREFS, Activity.MODE_PRIVATE);
+        if(!pref.getBoolean(KEY, false)){
+            long interval = getResources().getInteger(R.integer.default_interval) * 60 * 1000;
+            EarthQuakeAlarmManager.setAlarm(this, interval);
+            pref.edit().putBoolean(KEY, true).apply();
+        }
+
     }
 
     private void downloadEarthQuakes() {
@@ -78,7 +103,6 @@ public class MainActivity extends ActionBarActivity implements DownloadEarQuakes
         Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         t.show();
         target.ActualizarLista();
-
     }
 
 

@@ -23,6 +23,8 @@ import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 import tk.mirenamorrortu.earthquakes.R;
 
 public class DownloadEarthquakeService extends Service {
+
+    int cont;
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -36,13 +38,13 @@ public class DownloadEarthquakeService extends Service {
     public void onCreate() {
         super.onCreate();
         earthQuakeDB = new EarthQuakesDB(this);
+        cont = -1;
 
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-
         /* asi nos falla por que se ejecuta con el Main y hay que hacerlo en un Threath
         updateEarthQuakes(getString(R.string.eartquakes_url));*/
 
@@ -57,6 +59,7 @@ public class DownloadEarthquakeService extends Service {
 
         return Service.START_STICKY;
     }
+
 
 
     private Integer updateEarthQuakes(String earthquakesFeed) {
@@ -88,7 +91,8 @@ public class DownloadEarthquakeService extends Service {
                 count = earthquakes.length();
 
                 for (int i = earthquakes.length() - 1; i >= 0; i--) {
-                    processEarthQuakeTask(earthquakes.getJSONObject(i));
+                    long r = processEarthQuakeTask(earthquakes.getJSONObject(i));
+                    if (r != -1) {cont++;}
                 }
             }
         } catch (MalformedURLException e) {
@@ -98,10 +102,17 @@ public class DownloadEarthquakeService extends Service {
         } catch (JSONException e) {
             Log.d("TAG", "JSON Exception", e);
         }
+        if (cont > -1){
+            Log.d("SERVICE", "Añadidos " + String.valueOf(cont) + "Terremotos");
+        }
+        else{
+            Log.d("SERVICE", "No se han añadido terremotos");
+        }
         return count;
     }
 
-    private void processEarthQuakeTask(JSONObject jsonObject) {
+    private long processEarthQuakeTask(JSONObject jsonObject) {
+        long resadd;
         try {
             String id = jsonObject.getString("id");
 
@@ -121,15 +132,15 @@ public class DownloadEarthquakeService extends Service {
 
             Log.d(EARTHQUAKE, eQ.toString());
 
-            earthQuakeDB.addEarthQuakeToDB(eQ);
-
+            resadd= earthQuakeDB.addEarthQuakeToDB(eQ);
 
             //publishProgress(eQ);
 
         } catch (JSONException e) {
             e.printStackTrace();
+            resadd = -1;
         }
-
+        return resadd;
     }
 
 }

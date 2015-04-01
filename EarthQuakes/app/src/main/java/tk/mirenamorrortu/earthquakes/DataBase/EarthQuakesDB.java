@@ -44,10 +44,6 @@ public class EarthQuakesDB {
         return res;
     }
 
-    private boolean isEarthQuakeOnDataBase (String id){
-        return (getEarthQuakesbyId(id) != null);
-    }
-
     private ArrayList<EarthQuake> ConvertirConsultaTipoEarthQuake (Cursor cursor){
         ArrayList<EarthQuake> earthQuakes = new ArrayList<EarthQuake>();
         if (cursor != null && cursor.getCount() > 0){
@@ -65,10 +61,12 @@ public class EarthQuakesDB {
 
     public EarthQuake GetEarthQuake (String idEarthQuake){
         Cursor consulta = getEarthQuakesbyId(idEarthQuake);
-        if (consulta!= null){
+        if (consulta!= null && consulta.getCount() > 0){
             HashMap<String, Integer> colum_index = getColumnsIndex(result_columns, consulta);
             consulta.moveToFirst();
-            return CursorToEarthQuake(consulta, colum_index);
+            EarthQuake eq = CursorToEarthQuake(consulta, colum_index);
+            consulta.close();
+            return eq;
         }
         return null;
     }
@@ -156,14 +154,16 @@ public class EarthQuakesDB {
         return db.query(EarthQuakeOpenHelper.DATABASE_TABLE, result_columns, where, whereArgs, groupBy, having, order);
     }
 
-    public void addEarthQuakeToDB(EarthQuake eq) {
+    public long addEarthQuakeToDB(EarthQuake eq) {
         //podemos coger el número de la fila en la que se ha añadido si fuera necesario!!
-        AddEarthQuake(eq);
+        return AddEarthQuake(eq);
     }
 
     private long AddEarthQuake (EarthQuake eq) {
         long row = -1;
-        if (!isEarthQuakeOnDataBase(eq.getId())){
+        String id = eq.getId().toString();
+        if (!isEarthQuakeOnDataBase(id)){
+            Log.d("BD", "ID: " + id + " no está, lo añadimos");
             ContentValues newEQBD = EarthQuakeToContentValues(eq);
             try{
                 row = db.insertOrThrow(EarthQuakeOpenHelper.DATABASE_TABLE, null, newEQBD);
@@ -172,7 +172,36 @@ public class EarthQuakesDB {
                 Log.d("ERROR_INSERT_BD", "Error al insertar en la BD: " + ex.getMessage());
             }
         }
+        else{
+            Log.d("BD", "ID: " + id + " ya está en la BD");
+        }
         return row;
+    }
+
+    public boolean isEarthQuakeOnDataBase (String id){
+        Cursor cons = getEarthQuakesbyId(id);
+        String s = "null";
+        int cont = -1;
+        boolean res = false;
+        try{
+            if (cons != null){
+                s = "NOTNULL";
+                cont = cons.getCount();
+                if (cont > 0){
+                    res = true;
+                }else{
+                    res = false;
+                }
+            }else{
+                res = false;
+            }
+        }catch (Exception ex){
+            Log.d ("ERROR", "¿¿¿PORQUE????");
+            Log.d ("ERROR", "cons: " + s );
+            Log.d ("ERROR", "cons.getCount(): " + cont );
+        }
+        cons.close();
+        return res;
     }
 
     private ContentValues EarthQuakeToContentValues (EarthQuake eq){
