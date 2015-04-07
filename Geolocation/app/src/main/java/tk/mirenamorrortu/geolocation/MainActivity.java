@@ -2,14 +2,15 @@ package tk.mirenamorrortu.geolocation;
 
 import android.content.Context;
 import android.location.Criteria;
+
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 import tk.mirenamorrortu.geolocation.listeners.LocationListener;
 
@@ -46,7 +47,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener.
         int t = 5000; //milliseconds
         int distance = 5; //meters
 
-        LocationListener listener = new LocationListener();
+        LocationListener listener = new LocationListener(this);
 
         locationManager.requestLocationUpdates(provider, t, distance, listener);
     }
@@ -67,9 +68,16 @@ public class MainActivity extends ActionBarActivity implements LocationListener.
 
     @Override
     public void addLocation(Location location) {
-        lblAltitude.setText(String.valueOf(location.getAltitude()));
-        lblSpeed.setText(String.valueOf(location.getSpeed()));
-        lblLongitude.setText(String.valueOf(location.getLongitude()));
-        lblLatitude.setText(String.valueOf(location.getLatitude()));
+        Log.d("GPS", "AddLocation on MainActivity");
+        DecimalFormat df = new DecimalFormat("0.00##");
+        Log.d("GPS", "Altitude: " + String.valueOf(location.getAltitude()));
+        Log.d("GPS", "Speed: " + String.valueOf(location.getSpeed()));
+        Log.d("GPS", "Longitude: " + String.valueOf(location.getLongitude()));
+        Log.d("GPS", "Latitude: " + String.valueOf(location.getLatitude()));
+
+        lblAltitude.setText(df.format(location.getAltitude()));
+        lblSpeed.setText(df.format(location.getSpeed()));
+        lblLongitude.setText(df.format(location.getLongitude()));
+        lblLatitude.setText(df.format(location.getLatitude()));
     }
 }

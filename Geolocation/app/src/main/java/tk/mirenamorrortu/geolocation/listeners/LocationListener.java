@@ -2,11 +2,15 @@ package tk.mirenamorrortu.geolocation.listeners;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
+
+import tk.mirenamorrortu.geolocation.MainActivity;
 
 /**
- * Created by cursomovil on 1/04/15.
+ * Created by Bafi on 1/04/15.
  */
 public class LocationListener implements android.location.LocationListener {
+
 
     public interface AddLocationInterface{
         public void addLocation(Location location);
@@ -14,11 +18,13 @@ public class LocationListener implements android.location.LocationListener {
 
     private AddLocationInterface target;
 
-    public void LocationListener(AddLocationInterface target){
-        target = target;
+    public LocationListener(AddLocationInterface target) {
+        this.target = target;
     }
+
     @Override
     public void onLocationChanged(Location location) {
+        Log.d("GPS", "AddLocation on LocationListener");
         target.addLocation(location);
     }
 

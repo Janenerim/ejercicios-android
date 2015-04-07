@@ -1,46 +1,94 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:layout_height="match_parent" tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Latitude"
         android:id="@+id/idLatitude"
-        android:layout_above="@+id/idLongitude"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="47dp"
-        android:textSize="30dp" />
+        android:textSize="28dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/space"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Longitude"
         android:id="@+id/idLongitude"
-        android:textSize="30dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="28dp"
+        android:layout_marginTop="56dp"
+        android:layout_below="@+id/idLatitude"
+        android:layout_alignStart="@+id/idLatitude"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Speed"
         android:id="@+id/idSpeed"
-        android:layout_marginTop="54dp"
-        android:textSize="30dp"
-        android:layout_below="@+id/idLongitude"
-        android:layout_centerHorizontal="true" />
+        android:textSize="28dp"
+        android:layout_marginTop="61dp"
+        android:layout_below="@+id/idAltitude"
+        android:layout_alignStart="@+id/idAltitude"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Altitude"
         android:id="@+id/idAltitude"
-        android:layout_marginTop="54dp"
-        android:textSize="30dp"
-        android:layout_below="@+id/idSpeed"
-        android:layout_centerHorizontal="true" />
+        android:textSize="28dp"
+        android:layout_marginTop="66dp"
+        android:layout_below="@+id/idLongitude"
+        android:layout_alignStart="@+id/idLongitude"
+        android:layout_alignEnd="@+id/idLongitude" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Latitude:"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="28dp"
+        android:layout_toStartOf="@+id/idLatitude" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_alignBottom="@+id/idLatitude"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/space" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Longitude:"
+        android:id="@+id/textView2"
+        android:layout_alignTop="@+id/idLongitude"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/idLongitude"
+        android:textSize="28dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Altitude:"
+        android:id="@+id/textView3"
+        android:layout_alignTop="@+id/idAltitude"
+        android:layout_alignEnd="@+id/space"
+        android:textSize="28dp"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Speed:"
+        android:id="@+id/textView4"
+        android:layout_alignTop="@+id/idSpeed"
+        android:layout_alignParentStart="true"
+        android:textSize="28dp"
+        android:layout_toStartOf="@+id/idSpeed" />
 </RelativeLayout>
