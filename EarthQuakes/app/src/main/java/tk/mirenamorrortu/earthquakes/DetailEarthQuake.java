@@ -5,17 +5,22 @@ import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.webkit.WebViewFragment;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
 import tk.mirenamorrortu.earthquakes.DataBase.EarthQuakesDB;
 import tk.mirenamorrortu.earthquakes.Fragments.EarthQuakeListFragment;
+import tk.mirenamorrortu.earthquakes.Model.Coordinate;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 
 
 public class DetailEarthQuake extends ActionBarActivity {
+
+    RelativeLayout detail;
 
     TextView magnitud;
     TextView _id;
@@ -24,7 +29,10 @@ public class DetailEarthQuake extends ActionBarActivity {
     TextView _url;
     WebViewFragment maps;
 
+    Coordinate coords;
+
     EarthQuake eq;
+    private String ID_EARTHQUAKE = "ID_EARTHQUAKE";
 
     private void SetViews(){
         magnitud = (TextView) findViewById(R.id.mag_txt);
@@ -34,6 +42,7 @@ public class DetailEarthQuake extends ActionBarActivity {
         _url = (TextView) findViewById(R.id.url_txt);
         maps = (WebViewFragment) getFragmentManager().findFragmentById(R.id.maps_frag);
         //maps = (Fragment) findViewById(R.id.maps_frag);
+        detail = (RelativeLayout) findViewById(R.id.DetailFragment);
     }
 
     @Override
@@ -61,17 +70,23 @@ public class DetailEarthQuake extends ActionBarActivity {
         Fecha.setText(eq.getTimeFormatted());
         Place.setText(eq.getPlace());
         _url.setText(eq.getUrl());
-
-        //maps.setCoords (eq.getCoords);
-/*        String url_gogle_maps_coords = getString(R.string.google_url);
-        url_gogle_maps_coords = url_gogle_maps_coords + eq.getCoords().getLat() + ", " + eq.getCoords().getLng();
-        maps.init(url_gogle_maps_coords);
-        getFragmentManager().beginTransaction().add(android.R.id.content, maps).commit();
-       */
+        this.coords = eq.getCoords();
 
 
+        detail.setOnClickListener(clickDetail);
     }
 
+    View.OnClickListener clickDetail = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            Intent mapIntent = new Intent(getBaseContext(), MapActivity.class);
+            //podríamos pasar solo el id y que el detalle se descargue la info;
+            mapIntent.putExtra(ID_EARTHQUAKE, eq.getId().toString());
+            //mapIntent.putExtra(EARTHQUAKE, eq);
+            startActivity(mapIntent);
+        }
+    };
     private static final int ROJO = Color.rgb(255,0,0);
     private static final int NARANJA = Color.rgb (255,128,0);
     private static final int AMARILLO = Color.rgb (255,255,0);

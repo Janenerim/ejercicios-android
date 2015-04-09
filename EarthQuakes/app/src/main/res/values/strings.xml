@@ -31,4 +31,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="google_url">https://www.google.es/maps/@</string>
     <string name="ALARM_DOWNLOAD_KEY">ALARM_DOWNLOAD</string>
+    <string name="title_activity_map">MapActivity</string>
 </resources>
