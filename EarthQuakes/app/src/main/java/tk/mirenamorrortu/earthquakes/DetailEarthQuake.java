@@ -6,14 +6,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.webkit.WebViewFragment;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import tk.mirenamorrortu.earthquakes.DataBase.EarthQuakesDB;
 import tk.mirenamorrortu.earthquakes.Fragments.EarthQuakeListFragment;
+import tk.mirenamorrortu.earthquakes.Fragments.MapFragmentGoogle;
 import tk.mirenamorrortu.earthquakes.Model.Coordinate;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 
@@ -27,7 +29,7 @@ public class DetailEarthQuake extends ActionBarActivity {
     TextView Fecha;
     TextView Place;
     TextView _url;
-    WebViewFragment maps;
+    MapFragmentGoogle maps;
 
     Coordinate coords;
 
@@ -40,8 +42,7 @@ public class DetailEarthQuake extends ActionBarActivity {
         Fecha = (TextView) findViewById(R.id.date_txt);
         Place = (TextView) findViewById(R.id.place_txt);
         _url = (TextView) findViewById(R.id.url_txt);
-        maps = (WebViewFragment) getFragmentManager().findFragmentById(R.id.maps_frag);
-        //maps = (Fragment) findViewById(R.id.maps_frag);
+        maps = (MapFragmentGoogle) getFragmentManager().findFragmentById(R.id.map_fragment_detail);
         detail = (RelativeLayout) findViewById(R.id.DetailFragment);
     }
 
@@ -60,6 +61,14 @@ public class DetailEarthQuake extends ActionBarActivity {
        // eq = detailIntent.getParcelableExtra(EarthQuakeListFragment.EARTHQUAKE);
 
         populateView();
+        showMap(eq);
+    }
+
+    private void showMap(EarthQuake earthQuake){
+        List<EarthQuake> earthQuakes = new ArrayList<EarthQuake>();
+        earthQuakes.add(earthQuake);
+
+        maps.setEarthQuakes(earthQuakes);
     }
 
     private void populateView(){

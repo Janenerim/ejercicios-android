@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,7 +49,7 @@ public class MapActivity extends Activity {
 
         EarthQuakes = loadEarthQuakes(db);
         String eqId = detailIntent.getStringExtra(EarthQuakeListFragment.ID_EARTHQUAKE);
-
+        Log.d("EQ", "eqid: " + eqId);
         //loadMapMarks(eqId);
         //EarthQuake eq = db.GetEarthQuake(eqId);
         MarkerOptions mark = createMapMark(0D, 0D);
@@ -95,9 +96,9 @@ public class MapActivity extends Activity {
         LatLng focusMark = new LatLng(eq.getCoords().getLat(),eq.getCoords().getLng());
 
         CameraPosition camPos = new CameraPosition.Builder().target(focusMark)
-                .zoom(20)
+                .zoom(5)/*
                 .bearing(0)
-                .tilt(90)
+                .tilt(90)*/
                 .build();
         CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
         map.getMap().animateCamera(camUpd);
