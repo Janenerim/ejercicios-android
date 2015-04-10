@@ -1,27 +1,87 @@
 package tk.mirenamorrortu.earthquakes;
 
+
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-
 import tk.mirenamorrortu.earthquakes.Activities.SettingsActivity;
+import tk.mirenamorrortu.earthquakes.Fragments.EarthQuakeListFragment;
+import tk.mirenamorrortu.earthquakes.Fragments.MapFragmentGoogle;
 import tk.mirenamorrortu.earthquakes.Managers.EarthQuakeAlarmManager;
-import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 import tk.mirenamorrortu.earthquakes.Services.DownloadEarthquakeService;
 import tk.mirenamorrortu.earthquakes.task.DownloadEarQuakesTask;
 
 
-public class MainActivity extends ActionBarActivity implements DownloadEarQuakesTask.AddEarthQuakeInterface{
+public class MainActivity extends Activity implements DownloadEarQuakesTask.AddEarthQuakeInterface, ActionBar.TabListener{
     public static final int PREFS_ACTIVITY = 0;
     private String EARTHQUAKE_PREFS = "PREFERENCES";
+    private ActionBar actionBar;
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
+    }
+
+
+
+    public static class TabListener < T extends Fragment> implements android.app.ActionBar.TabListener {
+        private Fragment fragment;
+        private Activity activity;
+        private Class<T> fragmentClass;
+        private int fragmentContainer;
+
+        public TabListener(Activity	activity, int fragmentContainer, Class<T> fragmentClass) {
+            this.activity = activity;
+            this.fragmentContainer = fragmentContainer;
+            this.fragmentClass = fragmentClass;
+        }
+
+        // Called when a new tab has been selected
+        public void onTabSelected(android.app.ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+            if (fragment == null) {
+                String fragmentName = fragmentClass.getName();
+                fragment = Fragment.instantiate(activity, fragmentName);
+                ft.add(fragmentContainer, fragment, fragmentName);
+            } else{
+                ft.attach(fragment);
+            }
+        }
+
+        // Called on the currently selected tab when a different tag is
+        // selected.
+
+        public void onTabUnselected(android.app.ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+            if	(fragment	!=	null){
+                ft.detach(fragment);
+            }
+        }
+
+        // Called when the selected tab is selected.
+        public void onTabReselected(android.app.ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+            if (fragment !=	null){
+                ft.attach(fragment);
+            }
+        }
+    }
 
     public interface ActualizarListaInterface{
         public void ActualizarLista();
@@ -31,11 +91,40 @@ public class MainActivity extends ActionBarActivity implements DownloadEarQuakes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TabListener listFragment;
+        TabListener mapfragment;
+
+        // Set the Action Bar to use tabs for navigation
+        actionBar = getActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
         target = (ActualizarListaInterface) this.getFragmentManager().findFragmentById(R.id.fragment);
+
+        ActionBar.Tab tabOne = actionBar.newTab();
+        listFragment = new TabListener<EarthQuakeListFragment>(this, R.id.fragmentcontainer, EarthQuakeListFragment.class);
+        tabOne.setText("EarthQuakes List")
+                //.setIcon(R.drawable.ic_launcher)
+                .setContentDescription("order by magnitude")
+                .setTabListener(listFragment);
+        actionBar.addTab(tabOne);
+
+        ActionBar.Tab tabtwo = actionBar.newTab();
+        mapfragment = new TabListener<MapFragmentGoogle>(this, R.id.fragmentcontainer, MapFragmentGoogle.class);
+        tabOne.setText("EarthQuakes Map")
+                //.setIcon(R.drawable.ic_launcher)
+                .setTabListener(mapfragment);
+        actionBar.addTab(tabtwo);
+
+
         //downloadEarthQuakes();
         checkToSettedAlarm();
+
         //Comprobamos si hay que lanzar la alarma:
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean autorefresh = Boolean.parseBoolean(prefs.getString(this.getString(R.string.autorefresh), "false"));

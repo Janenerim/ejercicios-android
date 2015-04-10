@@ -2,6 +2,7 @@ package tk.mirenamorrortu.earthquakes;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -88,12 +89,11 @@ public class DetailEarthQuake extends ActionBarActivity {
     View.OnClickListener clickDetail = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
-            Intent mapIntent = new Intent(getBaseContext(), MapActivity.class);
-            //podríamos pasar solo el id y que el detalle se descargue la info;
-            mapIntent.putExtra(ID_EARTHQUAKE, eq.getId().toString());
-            //mapIntent.putExtra(EARTHQUAKE, eq);
-            startActivity(mapIntent);
+            //Al hacer click abrimos la página web asociada al terremoto
+            String url = eq.getUrl();
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
         }
     };
     private static final int ROJO = Color.rgb(255,0,0);

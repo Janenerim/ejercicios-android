@@ -9,6 +9,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -60,8 +61,21 @@ public class MapFragmentGoogle extends MapFragment implements GoogleMap.OnMapLoa
 
         LatLngBounds bounds = builder.build();
 
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 10);
-        map.moveCamera(cu);
+        CameraUpdate cu;
+        if (earthQuakes.size() == 1){
+            EarthQuake earthQuake = earthQuakes.get(0);
+            LatLng point = new LatLng(earthQuake.getCoords().getLng(), earthQuake.getCoords().getLat());
+            CameraPosition camPos = new CameraPosition.Builder().target(point)
+                    .zoom(15)
+                    .bearing(0)
+                    .tilt(90)
+                    .build();
+            cu = CameraUpdateFactory.newCameraPosition(camPos);
+        }else{
+            cu = CameraUpdateFactory.newLatLngBounds(bounds, 1);
+        }
+
+        map.animateCamera(cu);
 
     }
 }
