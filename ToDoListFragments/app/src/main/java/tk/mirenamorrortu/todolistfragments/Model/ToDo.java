@@ -53,7 +53,6 @@ public class ToDo implements Parcelable {
         created = new Date(in.readLong());
     }
 
-
     public static final Parcelable.Creator<ToDo> CREATOR
             = new Parcelable.Creator<ToDo>() {
         public ToDo createFromParcel(Parcel in) {

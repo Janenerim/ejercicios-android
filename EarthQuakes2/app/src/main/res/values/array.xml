@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string-array name="update_freq_values">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>720</item>
+        <item>1440</item>
+    </string-array>
+    <string-array name="update_freq_options">
+        <item>@string/frequency_1_min</item>
+        <item>@string/frequency_5_min</item>
+        <item>@string/frequency_10_min</item>
+        <item>@string/frequency_15_min</item>
+        <item>@string/frequency_30_min</item>
+        <item>@string/frequency_1_hour</item>
+        <item>@string/frequency_12_hour</item>
+        <item>@string/frequency_1_day</item>
+    </string-array>
+    <string-array name="magnitude_values">
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+    <string-array name="magnitude_options">
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+</resources>

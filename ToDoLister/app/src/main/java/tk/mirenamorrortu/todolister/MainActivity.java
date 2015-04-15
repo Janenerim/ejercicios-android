@@ -56,7 +56,6 @@ public class MainActivity extends ActionBarActivity {
 
         todos = new ArrayList <String> ();
 
-        //todos = new ArrayList <String> ();
         aa = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, todos);
 
         btnAdd = (Button) findViewById(R.id.btnAdd);
@@ -80,7 +79,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

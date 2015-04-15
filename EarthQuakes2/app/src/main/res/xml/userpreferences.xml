@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/earthquakes_refresh">
+        <!---Autorefresh si/no -->
+        <SwitchPreference
+            android:key="@string/autorefresh_id"
+            android:title="@string/autorefresh"
+            android:summary="@string/autorefresh_detail"
+            android:defaultValue="true"/>
+
+        <!---Frecuencia refresco -->
+        <ListPreference
+            android:dependency="@string/autorefresh_id"
+            android:key="@string/frequency"
+            android:title="@string/frequency_time"
+            android:summary="@string/frequency_detail"
+            android:entries="@array/update_freq_options"
+            android:entryValues="@array/update_freq_values"
+            android:defaultValue="@integer/default_interval"/>
+
+
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/earthquakes_filter">
+        <!--- Magnitud mínima -->
+        <ListPreference
+            android:key="@string/min_mag"
+            android:title="@string/min_magnitude"
+            android:summary="@string/min_magnitude_detail"
+            android:entries="@array/magnitude_options"
+            android:entryValues="@array/magnitude_values"
+            android:defaultValue="0"/>
+    </PreferenceCategory>
+</PreferenceScreen>
