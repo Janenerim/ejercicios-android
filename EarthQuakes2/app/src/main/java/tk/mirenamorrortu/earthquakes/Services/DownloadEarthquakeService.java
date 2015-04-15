@@ -4,7 +4,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.IBinder;
@@ -22,7 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import tk.mirenamorrortu.earthquakes.DataBase.EarthQuakesDB;
+import tk.mirenamorrortu.earthquakes.providers.EarthQuakesDB;
 import tk.mirenamorrortu.earthquakes.MainActivity;
 import tk.mirenamorrortu.earthquakes.Model.Coordinate;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;

@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import tk.mirenamorrortu.earthquakes.Adaters.EarthQuakeAdapter;
-import tk.mirenamorrortu.earthquakes.DataBase.EarthQuakesDB;
+import tk.mirenamorrortu.earthquakes.providers.EarthQuakesDB;
 import tk.mirenamorrortu.earthquakes.DetailEarthQuake;
 import tk.mirenamorrortu.earthquakes.MainActivity;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
@@ -28,7 +28,7 @@ import tk.mirenamorrortu.earthquakes.task.DownloadEarQuakesTask;
 /**
  * A fragment representing a list of EarthQuakes.
  */
-public class EarthQuakeListFragment extends ListFragment implements DownloadEarQuakesTask.AddEarthQuakeInterface, MainActivity.ActualizarListaInterface{
+public class EarthQuakeListFragment extends ListFragment /*implements DownloadEarQuakesTask.AddEarthQuakeInterface*/{
 
 
     private ArrayList<EarthQuake> earthQuakes;
@@ -45,12 +45,12 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEarQ
         return Double.parseDouble(prefs.getString(context.getString(R.string.min_mag),"0"));
     }
 
-    @Override
+    /*@Override
     public void notifyTotal(int total) {
         String msg = getString(R.string.num_earthquakes, total);
         Toast t = Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT);
         t.show();
-    }
+    }*/
     /*como va a tardar en obtener los datos desde inet, lo hacemos cuanto antes, y como no nos haceç
         falta la vista, porque luego tenemos el notify
     */
@@ -135,11 +135,11 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEarQ
     }
 
 
-    @Override
+    /*@Override
     public void ActualizarLista() {
         //this.actualizarlista();
         this.actualizarlista_bypreferences();
-    }
+    }*/
 
     @Override
     public void onResume() {

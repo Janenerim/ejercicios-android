@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.List;
-import tk.mirenamorrortu.earthquakes.DataBase.EarthQuakesDB;
+import tk.mirenamorrortu.earthquakes.providers.EarthQuakesDB;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 import tk.mirenamorrortu.earthquakes.R;
 

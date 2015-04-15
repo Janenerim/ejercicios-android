@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import tk.mirenamorrortu.earthquakes.DataBase.EarthQuakesDB;
+import tk.mirenamorrortu.earthquakes.providers.EarthQuakesDB;
 import tk.mirenamorrortu.earthquakes.Model.Coordinate;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 

@@ -17,7 +17,7 @@ import tk.mirenamorrortu.earthquakes.Managers.EarthQuakeAlarmManager;
 import tk.mirenamorrortu.earthquakes.Services.DownloadEarthquakeService;
 import tk.mirenamorrortu.earthquakes.task.DownloadEarQuakesTask;
 
-public class MainActivity extends Activity {//implements DownloadEarQuakesTask.AddEarthQuakeInterface {
+public class MainActivity extends Activity {
     public static final int PREFS_ACTIVITY = 0;
     private String EARTHQUAKE_PREFS = "PREFERENCES";
     private ActionBar actionBar;
@@ -76,12 +76,6 @@ public class MainActivity extends Activity {//implements DownloadEarQuakesTask.A
         }
     }
 
-    public interface ActualizarListaInterface{
-        public void ActualizarLista();
-    }
-
-    //private ActualizarListaInterface target;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -93,16 +87,13 @@ public class MainActivity extends Activity {//implements DownloadEarQuakesTask.A
 
         // Set the Action Bar to use tabs for navigation
         actionBar = getActionBar();
-        // actionBar.setDisplayShowTitleEnabled(false);
 
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        //target = (ActualizarListaInterface) this.getFragmentManager().findFragmentById(R.id.fragment);
 
         ActionBar.Tab tabOne = actionBar.newTab();
         listFragment = new TabListener<EarthQuakeListFragment>(this, R.id.fragmentcontainer, EarthQuakeListFragment.class);
         tabOne.setText("EarthQuakes List")
-                //.setIcon(R.drawable.ic_launcher)
                 .setContentDescription("order by magnitude")
                 .setTabListener(listFragment);
         actionBar.addTab(tabOne);
@@ -110,12 +101,9 @@ public class MainActivity extends Activity {//implements DownloadEarQuakesTask.A
         ActionBar.Tab tabtwo = actionBar.newTab();
         mapfragment = new TabListener<MapListFragment>(this, R.id.fragmentcontainer, MapListFragment.class);
         tabtwo.setText("EarthQuakes Map")
-                //.setIcon(R.drawable.ic_launcher)
                 .setTabListener(mapfragment);
         actionBar.addTab(tabtwo);
 
-
-        //downloadEarthQuakes();
         checkToSettedAlarm();
 
         //Comprobamos si hay que lanzar la alarma:
@@ -137,15 +125,6 @@ public class MainActivity extends Activity {//implements DownloadEarQuakesTask.A
             pref.edit().putBoolean(KEY, true).apply();
         }
 
-    }
-
-    private void downloadEarthQuakes() {
-        /*Con AsynTask
-        DownloadEarQuakesTask task = new DownloadEarQuakesTask(this.getBaseContext(), this);
-        task.execute(getString(R.string.eartquakes_url));*/
-
-        Intent Download = new Intent (this, DownloadEarthquakeService.class);
-        startService(Download);
     }
 
 
@@ -178,14 +157,5 @@ public class MainActivity extends Activity {//implements DownloadEarQuakesTask.A
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-/*
-    @Override
-    public void notifyTotal(int total) {
-        String msg = getString(R.string.num_earthquakes, total);
-        Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-        t.show();
-        target.ActualizarLista();
-    }*/
-
 
 }

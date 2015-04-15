@@ -48,10 +48,12 @@
             android:exported="true" >
         </service>
 
-        <activity
-            android:name=".MapActivity"
-            android:label="@string/title_activity_map" >
-        </activity>
+        <provider
+            android:name=".providers.EarthQuakesProvider"
+            android:authorities="tk.mirenamorrortu.provider.EarthQuakes"
+            android:enabled="true"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>

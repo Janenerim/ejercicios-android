@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -12,13 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
-import tk.mirenamorrortu.earthquakes.DataBase.EarthQuakesDB;
+import tk.mirenamorrortu.earthquakes.providers.EarthQuakesDB;
 import tk.mirenamorrortu.earthquakes.Fragments.EarthQuakeListFragment;
 import tk.mirenamorrortu.earthquakes.Fragments.MapDetailFragmet;
-import tk.mirenamorrortu.earthquakes.Fragments.MapFragmentGoogle;
 import tk.mirenamorrortu.earthquakes.Model.Coordinate;
 import tk.mirenamorrortu.earthquakes.Model.EarthQuake;
 
